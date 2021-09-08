@@ -84,3 +84,10 @@ let y = 10 in let x = 2 in y + x ;;
 > Env = {(x, 3, int) {(y, 10, int) {(x, 2, int)}}}
 > Env = {(x, 3, int)}
 ```
+
+## Types
+Types: int, float, char, string, bool    
+Opérations entiers: + - * / mod     
+Opérations réels: +. -. *. /. **
+- string_of_int
+- int_of_string
