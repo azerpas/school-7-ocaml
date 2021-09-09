@@ -164,5 +164,52 @@ val a : int = 2 ;; (* On redéfini a = 2 *)
 (* - : int = 4 *)
 # fun (x, y) -> x;; (* Pas d'argument fourni, la fonction n'est pas exécutée *)
 (* - : 'a * 'b -> 'a = <fun> *)
-# (fun (x, y) -> x) (42, 'A');; (* Cette fonction renvoie la première valeur du couple *)
+# (fun (x, y) -> x) (42, 'A');; (* Cette fonction renvoie la première valeur du couple, soit 42 *)
 (* - : int = 42 *) 
+
+
+(*
+      ------------------------------------------------
+      @title Expressions conditionnelles
+      ------------------------------------------------
+*)
+# let abs x = if(x >= 0) then x else -x;;
+
+
+(*
+      ------------------------------------------------
+      @title Exception failwith
+      ------------------------------------------------
+*)
+# let division a b = 
+      if(a = 0 || b = 0) then
+            failwith "Division par 0"
+      else 
+            a / b ;;
+
+
+(*
+      ------------------------------------------------
+      @title À votre tour...
+      ------------------------------------------------
+*)
+(* 1) *)
+# let max a b = if(a>b) then a else b ;;
+
+(* 2) *)
+# let maxi3 a b c = 
+      if(a>b) then
+            if(a>c) then
+                  a
+            else
+                  c
+      else 
+            if(b>c) then 
+                  b
+            else c ;;
+
+(* 3) *)
+(* 
+      Pour généraliser la démarche il faudrait utiliser un tableau
+      et itérer à travers ce tableau pour trouver le maximum 
+*)
