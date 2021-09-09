@@ -91,3 +91,29 @@ Opérations entiers: + - * / mod
 Opérations réels: +. -. *. /. **
 - string_of_int
 - int_of_string
+
+### Nouveaux types
+```py
+type jour = int ;; (* {1,..., 31} *)
+type mois = Jan | Fev | ... | Dec ;;
+type date = jour * mois * annee ;;
+```
+
+### n-uplets
+```py
+(heure, minute, seconde)
+(nom, prenom, age)
+(12, "octobre") ;;
+> int * string = 12, "octobre"
+(65, 'B', "ascii") ;;
+> int * char * string = 65, 'B', "ascii"
+```
+
+### Listes
+Seulement un type à la fois
+```py
+[1; 2; 3]
+> int list = [1; 2; 3]
+[1; "deux"; 3]
+> ERROR
+```
