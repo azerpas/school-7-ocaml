@@ -103,3 +103,41 @@ val a : int = 2 ;; (* On redéfini a = 2 *)
 (* val succ : int -> int = <fun> *)
 # succ 2;;        
 (* - : int = 3 *)
+
+# let puissance4 x =
+      let carre y = y * y in (* def locale d’une fonction *)
+      carre (carre x);;  
+(* val puissance4 : int -> int = <fun> *)
+# puissance4 2;;
+(* - : int = 16 *)
+
+# let moyenne a b = (a +. b) /. 2.0;;
+(* val moyenne : float -> float -> float = <fun> *)
+# let moyenne2 (a, b) = (a +. b) /. 2.0;;
+(* val moyenne2 : float * float -> float = <fun> *)
+# moyenne 3.0 2.0;;
+(* - : float = 2.5 *)
+# moyenne 3.0;;
+(* - : float -> float = <fun> *) (* Ne marche pas car moyenne nécessite deux paramètres distincts *)
+# (moyenne 3.0) 2.0;;
+(* - : float = 2.5 *) (* Marche car les parenthèses ne servent à rien ici *)
+# moyenne (3.0, 2.0);; 
+(* Error: This expression has type 'a * 'b
+       but an expression was expected of type float *)
+(* Ne marche pas car moyenne nécessite deux paramètres distincts et non un couple *)
+# moyenne2 (3.0, 2.0);;
+(* - : float = 2.5 *)
+# moyenne2 3.0;;
+(* Error: This expression has type float but an expression was expected of type
+         float * float *)
+(* Ne marche pas car moyenne2 nécessite un couple en paramètre *)
+
+# let f = fun x1 -> (fun x2 -> fun x3 -> x1 * x2 - x3);;
+(* val f : int -> int -> int -> int = <fun> *)
+# f 2 4 6;;
+(* - : int = 2 *)
+
+# let f = fun x1 x2 x3 -> x1 * x2 - x3;;
+(* val f : int -> int -> int -> int = <fun> *)
+# f 2 4 6;;
+(* - : int = 2 *)
