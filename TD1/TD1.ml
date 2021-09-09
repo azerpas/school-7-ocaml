@@ -141,3 +141,28 @@ val a : int = 2 ;; (* On redéfini a = 2 *)
 (* val f : int -> int -> int -> int = <fun> *)
 # f 2 4 6;;
 (* - : int = 2 *)
+
+# let f x1 x2 x3 = x1 * x2 - x3;;
+(* val f : int -> int -> int -> int = <fun> *)
+# f 2 4 6;;
+(* - : int = 2 *)
+
+
+(* 
+      ------------------------------------------------
+      @subtitle Fonctions anonymes
+      ------------------------------------------------
+*)
+
+# fun x -> x + 1;;
+(* - : int -> int = <fun> *) (* Pas d'argument fourni, la fonction n'est pas exécutée *)
+# (fun x -> x + 1) 3;;
+(* - : int = 4 *) (* 3 + 1 = 4 *)
+# fun x -> (fun y -> x + y);; (* Pas d'argument fourni, la fonction n'est pas exécutée *)
+(* - : int -> int -> int = <fun> *)
+# (fun x -> (fun y -> x + y) 1) 3;; (* 1 est l'argument de la première fonction anonyme, 3 est celui de la deuxième. 3+1=4 *)
+(* - : int = 4 *)
+# fun (x, y) -> x;; (* Pas d'argument fourni, la fonction n'est pas exécutée *)
+(* - : 'a * 'b -> 'a = <fun> *)
+# (fun (x, y) -> x) (42, 'A');; (* Cette fonction renvoie la première valeur du couple *)
+(* - : int = 42 *) 
