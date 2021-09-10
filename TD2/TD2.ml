@@ -1,6 +1,7 @@
 (*
       ------------------------------------------------
       @title Appropriation du cours
+      @author Azerpas
       ------------------------------------------------
 *)
 
@@ -131,10 +132,14 @@ let secondeSuivante (heure, minute, seconde) =
 (*
     add_Fraction2
     -- Spécification --
-        Entier * Entier -> fraction
-        n1 * n2 -> somme de n1 et n2
+        Entier * Entier * Entier * Entier -> fraction
+        (n1, n2) * (n3, n4) -> somme des couples sous fraction
     -- Code --
- *)TODO:
+ *)
+# let add_fraction2 (n1,n2) (n3,n4) = {num = n1 * n4 + n3 * n2 ; denum = n2 * n4} ;;
+(** val add_fraction2 : int * int -> int * int -> fraction = <fun> *)
+# add_fraction2 (1,3) (2,5) ;;
+(* - : fraction = {num = 11; denum = 15} *)
 
 (*
       ------------------------------------------------
@@ -164,10 +169,17 @@ let secondeSuivante (heure, minute, seconde) =
 (*
     testEgalite2
     -- Spécification --
-        fraction * fraction -> boolean
-        f1 * f2 -> f1 et f2 sont égaux ?
+        Entier * Entier * Entier * Entier -> boolean
+        (n1, n2) * (n3, n4) -> les dénominateurs et numérateurs sont égaux ?
     -- Code --
- *)TODO:
+ *)
+# let testEgalite2 (n1, n2) (n3, n4) = if(n1 = n3 && n2 = n4) then true else false ;;
+(** val testEgalite2 : 'a * 'b -> 'a * 'b -> bool = <fun> *)
+(* -- Application -- *)
+# testEgalite2 (3,4) (3,4) ;;
+(* - : bool = true *)
+# testEgalite2 (3,4) (3,2) ;;
+(* - : bool = false *)
 
 
 (*
@@ -180,6 +192,7 @@ let secondeSuivante (heure, minute, seconde) =
 (** type couleur = Rose | Cyan | Violet | Orange | Rouge | Jaune | Vert | Bleu *)
 # type monopoly = {nom: string; couleur: couleur; prix: int} ;; 
 (** type monopoly = { nom : string; couleur : couleur; prix : int; } *)
+(* -- Application -- *)
 # let rue_montaigne = {nom="Montaigne"; couleur=Bleu; prix=500} ;;
 (* val rue_montaigne : monopoly = {nom = "Montaigne"; couleur = Bleu; prix = 500} *)
 # let rue_perle = {nom="Perle"; couleur=Orange; prix=250} ;;
@@ -212,6 +225,7 @@ let secondeSuivante (heure, minute, seconde) =
             else 
                 (r1, r3, r2) ;;  
 (** monopoly -> monopoly -> monopoly -> monopoly * monopoly * monopoly = <fun> *)
+(* -- Application -- *)
 # sortRue rue_rotor rue_montaigne rue_perle ;;
 (* - : monopoly * monopoly * monopoly =
 ({nom = "Rotor"; couleur = Rose; prix = 50},
