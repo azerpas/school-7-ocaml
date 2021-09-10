@@ -98,6 +98,18 @@ let secondeSuivante (heure, minute, seconde) =
 (* - : int * int * int = (10, 51, 0) *)
 # secondeSuivante (10,59,59) ;;
 (* - : int * int * int = (11, 0, 0) *)
+ (** - Variante 2 *)
+# let secondeSuivante (heure, minute, seconde) =
+    match (heure, minute, seconde)
+    with (23, 59, 59) -> (0, 0, 0) 
+        | (heure, 59, 59) -> (heure+1, 0, 0)
+        | (heure, minute, 59) -> (heure, minute+1, 0)
+        | (heure, minute, seconde) -> (heure,
+        minute, seconde+1) ;;
+(** val secondeSuivante : int * int * int -> int * int * int = <fun> *)
+(* -- Application -- *)
+# secondeSuivante (10,50,20) ;;
+(* - : int * int * int = (10, 50, 21) *)
 
 (*
     add_Fraction
@@ -106,3 +118,37 @@ let secondeSuivante (heure, minute, seconde) =
         n1 * n2 -> somme de n1 et n2
     -- Code --
  *)
+# type fraction = {num: int; denum: int};;
+(** type fraction = { num : int; denum : int; } *)
+# let add_fraction r1 r2 = 
+    {num = r1.num * r2.denum + r2.num * r1.denum ; 
+        denum = r1.denum * r2.denum};;
+(** val add_fraction : fraction -> fraction -> fraction = <fun> *)
+(* -- Application -- *)
+# add_fraction {num=1; denum=3} {num=2; denum=5};;
+(* - : fraction = {num = 11; denum = 15} *)
+
+(*
+      ------------------------------------------------
+      @title Problème 1
+      ------------------------------------------------
+*)
+
+(*
+    testEgalite1
+    -- Spécification --
+        fraction * fraction -> boolean
+        f1 * f2 -> f1 et f2 sont égaux ?
+    -- Code --
+ *)
+# let testEgalite1 f1 f2 = 
+    if(f1.num = f2.num && f1.denum = f2.denum) then 
+        true
+    else
+        false ;;
+(** val testEgalite1 : fraction -> fraction -> bool = <fun> *)
+(* -- Application -- *)
+# testEgalite1 {num=1; denum=3} {num=1; denum=2};;
+(* - : bool = false *)
+# testEgalite1 {num=1; denum=3} {num=1; denum=3};;
+(* - : bool = true *)
