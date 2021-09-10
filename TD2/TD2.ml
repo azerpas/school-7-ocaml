@@ -115,7 +115,7 @@ let secondeSuivante (heure, minute, seconde) =
     add_Fraction
     -- Spécification --
         fraction * fraction -> fraction
-        n1 * n2 -> somme de n1 et n2
+        r1 * r2 -> somme de r1 et r2
     -- Code --
  *)
 # type fraction = {num: int; denum: int};;
@@ -127,6 +127,14 @@ let secondeSuivante (heure, minute, seconde) =
 (* -- Application -- *)
 # add_fraction {num=1; denum=3} {num=2; denum=5};;
 (* - : fraction = {num = 11; denum = 15} *)
+
+(*
+    add_Fraction2
+    -- Spécification --
+        Entier * Entier -> fraction
+        n1 * n2 -> somme de n1 et n2
+    -- Code --
+ *)TODO:
 
 (*
       ------------------------------------------------
@@ -152,3 +160,60 @@ let secondeSuivante (heure, minute, seconde) =
 (* - : bool = false *)
 # testEgalite1 {num=1; denum=3} {num=1; denum=3};;
 (* - : bool = true *)
+
+(*
+    testEgalite2
+    -- Spécification --
+        fraction * fraction -> boolean
+        f1 * f2 -> f1 et f2 sont égaux ?
+    -- Code --
+ *)TODO:
+
+
+(*
+      ------------------------------------------------
+      @title Problème 2
+      ------------------------------------------------
+*)
+
+# type couleur = Rose | Cyan | Violet | Orange | Rouge | Jaune | Vert | Bleu ;; 
+(** type couleur = Rose | Cyan | Violet | Orange | Rouge | Jaune | Vert | Bleu *)
+# type monopoly = {nom: string; couleur: couleur; prix: int} ;; 
+(** type monopoly = { nom : string; couleur : couleur; prix : int; } *)
+# let rue_montaigne = {nom="Montaigne"; couleur=Bleu; prix=500} ;;
+(* val rue_montaigne : monopoly = {nom = "Montaigne"; couleur = Bleu; prix = 500} *)
+# let rue_perle = {nom="Perle"; couleur=Orange; prix=250} ;;
+(* val rue_perle : monopoly = {nom = "Perle"; couleur = Orange; prix = 250} *)
+# let rue_rotor = {nom="Rotor"; couleur=Rose; prix=50} ;;
+(* val rue_rotor : monopoly = {nom = "Rotor"; couleur = Rose; prix = 50} *)
+
+(*
+    sortRue
+    -- Spécification --
+        rue * rue * rue -> (rue * rue * rue)
+        r1 * r2 * r3 -> les rues classées ordre de prix croissant
+    -- Code --
+ *)
+# let sortRue r1 r2 r3 = 
+    if(r1.prix > r2.prix) then
+        if(r1.prix > r3.prix) then 
+            if(r2.prix > r3.prix) then 
+                (r3, r2, r1)
+            else
+                (r2, r3, r1)
+        else
+            (r2, r1, r3)
+    else
+        if(r1.prix > r3.prix) then
+            (r3, r1, r2)
+        else
+            if(r3.prix > r2.prix) then
+                (r1, r2, r3)
+            else 
+                (r1, r3, r2) ;;  
+(** monopoly -> monopoly -> monopoly -> monopoly * monopoly * monopoly = <fun> *)
+# sortRue rue_rotor rue_montaigne rue_perle ;;
+(* - : monopoly * monopoly * monopoly =
+({nom = "Rotor"; couleur = Rose; prix = 50},
+ {nom = "Perle"; couleur = Orange; prix = 250},
+ {nom = "Montaigne"; couleur = Bleu; prix = 500}) *)
