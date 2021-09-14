@@ -31,3 +31,5 @@ Lorsqu'on doit faire un calcul pour tous les éléments:
 1. On définit le cas de la liste vide
 2. On définit le calcul pour l'élément en tête
 3. Le calcul consiste à appliquer le calcul pour l'élément en tête puis à recommencer sur le reste de la liste, jusqu'à ce que ce reste soit la liste vide
+
+
