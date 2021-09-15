@@ -129,8 +129,19 @@
 (*
     miroir
         liste de type 'a -> liste de type 'a
-        l1 -> liste miroitée
+        l -> liste miroitée
  *)
-# let rec miroir l1 = match (List.tl l1) with
-    [] -> [(List.hd l1)] (** init *)
-    | head::tail -> (miroir tail)@[head] ;; 
+# let rec miroir l = match l with
+    [] -> []
+    | head::tail -> miroir tail @ [head] ;; 
+(* val miroir : 'a list -> 'a list = <fun> *)
+# miroir [3;4;5] ;;
+(* - : int list = [5; 4; 3] *)
+
+(* 
+    palindrome
+        liste de type char -> boolean
+        l -> est un palindrome
+ *)
+# let palindrome l = if (miroir l) = l then true else false ;;
+(* val palindrome : 'a list -> bool = <fun> *)
