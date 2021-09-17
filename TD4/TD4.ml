@@ -168,7 +168,7 @@ let rec listAlea n = ;;
 (* - : int list = [0; 1; 5; 6; 7] *)
 
 (*
-    3.
+    4.
     diff_sym
         liste d'entier * liste d'entier -> l
         l1 * l2 -> les éléments dans l1 ou l2 mais pas dans les deux
@@ -183,3 +183,24 @@ let rec listAlea n = ;;
 (* val difference : 'a list -> 'a list -> 'a list = <fun> *)
 # diff_sym e1 e2 ;;
 (* - : int list = [0; 1; 4; 5; 6; 7; 8] *)
+
+(*
+    5.
+    prod_cartesien
+        liste d'entier * liste d'entier -> liste de couples d'entiers
+        l1 * l2 -> liste de couples d'entiers issus du produit cartésien de l1 et l2
+ *)
+# let rec prod_cartesien l1 l2 =
+    if l2 = [] || l1 = [] then [] (* condition déclenchée lorsque: on a finit d'itérer dans l2 OU l1 a été itéré *)
+    else
+        [((List.hd l1), (List.hd l2))]
+        @ (prod_cartesien [(List.hd l1)] (List.tl l2)) (* distributivité: 1er élément l1 -> tous les éléments de l2 *)
+        @ (prod_cartesien (List.tl l1) l2) ;; (* on passe au prochain élément de l1 *)
+(* val prod_cartesien : 'a list -> 'b list -> ('a * 'b) list = <fun> *)
+# prod_cartesien e1 e2 ;;
+(* - : (int * int) list =
+[(0, 2); (0, 3); (0, 4); (0, 8); (0, 9); (1, 2); (1, 3); (1, 4); (1, 8);
+ (1, 9); (2, 2); (2, 3); (2, 4); (2, 8); (2, 9); (3, 2); (3, 3); (3, 4);
+ (3, 8); (3, 9); (5, 2); (5, 3); (5, 4); (5, 8); (5, 9); (6, 2); (6, 3);
+ (6, 4); (6, 8); (6, 9); (7, 2); (7, 3); (7, 4); (7, 8); (7, 9); (9, 2);
+ (9, 3); (9, 4); (9, 8); (9, 9)] *)
