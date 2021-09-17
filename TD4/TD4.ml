@@ -89,3 +89,41 @@
 (* - : int = 10 *)
 
 (** 2.c *)
+let rec listAlea n = ;;
+
+(*
+      ------------------------------------------------
+      @title Ensemble ordonnés et opérations ensemblistes
+      @subtitle Problème 2
+      ------------------------------------------------
+*)
+
+# let e1 = [0;1;2;3;5;6;7;9] ;;
+# let e2 = [2;3;4;8;9] ;;
+
+(** Fonctions utilisées *)
+# let rec contains x l = match l with
+    [] -> false
+    | head::tail -> if head = x then true else contains x tail ;; 
+
+(* 
+    1.
+    intersection
+        liste d'entier * liste d'entier -> l
+        l1 * l2 -> l'intersection des deux
+ *)
+# let rec intersection l1 l2 = 
+    if l1 = [] then []
+    else 
+        if contains (List.hd l1) l2 then (List.hd l1)::(intersection (List.tl l1) l2) 
+        else (intersection (List.tl l1) l2) ;;
+(* val intersection : 'a list -> 'a list -> 'a list = <fun> *)
+# intersection e1 e2 ;;
+(* - : int list = [2; 3; 9] *)
+
+(*
+    2.
+    union
+        liste d'entier * liste d'entier -> l
+        l1 * l2 -> l'union des deux
+ *)
