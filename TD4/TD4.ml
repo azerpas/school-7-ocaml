@@ -105,6 +105,10 @@ let rec listAlea n = ;;
 # let rec contains x l = match l with
     [] -> false
     | head::tail -> if head = x then true else contains x tail ;; 
+# let rec insere x l = 
+    if l = [] then [x]
+    else if ((List.hd l) > x) then x::l
+        else (List.hd l)::(insere x (List.tl l)) ;;
 
 (* 
     1.
@@ -126,4 +130,26 @@ let rec listAlea n = ;;
     union
         liste d'entier * liste d'entier -> l
         l1 * l2 -> l'union des deux
+
+    On va prendre l2 comme liste de retour,
+    c.a.d qu'on va lui ajouter tous les éléments 
+    présents dans l1 mais pas dans l2.
+    Une fois que l1 est vide on renvoie l2.
  *)
+# let rec union l1 l2 =
+    if l1 = [] then l2
+    else if contains (List.hd l1) l2 then 
+        union (List.tl l1) l2 (* on passe au suivant *)
+    else
+        (union (List.tl l1) (insere (List.hd l1) l2)) ;;
+(* val union : 'a list -> 'a list -> 'a list = <fun> *)
+# union e1 e2 ;;
+(* - : int list = [0; 1; 2; 3; 4; 5; 6; 7; 8; 9] *)
+
+(*
+    3.
+    difference
+       liste d'entier * liste d'entier -> l
+        l1 * l2 -> la différence de l1 par l2
+ *)
+# let rec difference l1 l2 = ;;
