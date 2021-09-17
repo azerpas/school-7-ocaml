@@ -166,3 +166,20 @@ let rec listAlea n = ;;
 (* val difference : 'a list -> 'a list -> 'a list = <fun> *)
 # difference e1 e2 ;;
 (* - : int list = [0; 1; 5; 6; 7] *)
+
+(*
+    3.
+    diff_sym
+        liste d'entier * liste d'entier -> l
+        l1 * l2 -> les éléments dans l1 ou l2 mais pas dans les deux
+ *)
+# let rec diff_sym l1 l2 = 
+    if l2 = [] then l1
+    else if contains (List.hd l2) l1 then
+        (diff_sym (removeElement (List.hd l2) l1) (List.tl l2))
+    else 
+        (* si l'élément de l2 n'est pas présent dans l1, on l'ajoute *)
+        diff_sym (insere (List.hd l2) l1) (List.tl l2) ;; 
+(* val difference : 'a list -> 'a list -> 'a list = <fun> *)
+# diff_sym e1 e2 ;;
+(* - : int list = [0; 1; 4; 5; 6; 7; 8] *)
