@@ -109,6 +109,11 @@ let rec listAlea n = ;;
     if l = [] then [x]
     else if ((List.hd l) > x) then x::l
         else (List.hd l)::(insere x (List.tl l)) ;;
+# let rec removeElement x l = 
+    if l = [] then l   
+    else
+        if (List.hd l) = x then (List.tl     l)
+        else (List.hd l)::(removeElement x (List.tl l)) ;;
 
 (* 
     1.
@@ -152,4 +157,12 @@ let rec listAlea n = ;;
        liste d'entier * liste d'entier -> l
         l1 * l2 -> la différence de l1 par l2
  *)
-# let rec difference l1 l2 = ;;
+# let rec difference l1 l2 = 
+    if l2 = [] then l1
+    else if contains (List.hd l2) l1 then
+        (difference (removeElement (List.hd l2) l1) (List.tl l2))
+    else 
+        difference l1 (List.tl l2) ;;
+(* val difference : 'a list -> 'a list -> 'a list = <fun> *)
+# difference e1 e2 ;;
+(* - : int list = [0; 1; 5; 6; 7] *)

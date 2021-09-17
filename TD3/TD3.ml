@@ -21,7 +21,7 @@
     if l = [] then l   
     else
         if (List.hd l) = x then (List.tl     l)
-        else (List.hd l)::(removeElement x (Li  st.tl l)) ;;
+        else (List.hd l)::(removeElement x (List.tl l)) ;;
 (* val removeElement : 'a -> 'a list -> 'a list = <fun> *)
 # removeElement 3 [4;3;5] ;;
 (* - : int list = [4; 5] *)
