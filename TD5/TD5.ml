@@ -138,3 +138,53 @@ let rec max_a a = match a with
 (* val max_a : int arbreBin -> int = <fun> *)
 # max_a a1 ;;
 (* - : int = 9 *)
+
+(*
+    complet
+        ArbreBin -> boolean
+        a ->  si arbre est complet
+*)
+let rec complet a = match a with 
+    | Vide -> false
+    | Feuille f -> true
+    | Noeud (fils1, pere, fils2) -> if (complet fils1) && (complet fils2) then true else false ;;
+(* val complet : 'a arbreBin -> bool = <fun> *)
+# complet a1 ;;
+(* - : bool = false *)
+# complet a2 ;;
+(* - : bool = true *)
+
+(*
+    parfait
+        ArbreBin -> boolean
+        a ->  si arbre est parfait (complet et équilibré)
+*)
+let parfait a = (complet a) && (equilibre a) ;;
+(* val parfait : 'a arbreBin -> bool = <fun> *)
+# parfait a1;;
+(* - : bool = false *)
+# parfait a2;;
+(* - : bool = true *)
+
+(*
+    miroir
+        ArbreBin -> ArbreBin
+        a -> miroir de a
+ *)
+let rec miroir a = match a with
+    | Vide -> Vide
+    | Feuille f -> Feuille f
+    | Noeud (fils1, pere, fils2) -> Noeud ((miroir fils2), pere, (miroir fils1)) ;;
+(* val miroir : 'a arbreBin -> 'a arbreBin = <fun> *)
+# miroir a1 ;;
+(* - : int arbreBin =
+Noeud (Noeud (Noeud (Feuille 8, 5, Feuille 9), 2, Vide), 0,
+ Noeud (Noeud (Feuille 7, 4, Feuille 6), 1, Feuille 3)) *)
+
+
+(*
+      ------------------------------------------------
+      @title Arbres binaires
+      @subtitle Problème 2
+      ------------------------------------------------
+*)
