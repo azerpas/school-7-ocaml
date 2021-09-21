@@ -107,6 +107,7 @@ let rec equilibre a = match a with
 *)
 
 (*
+    1.
     somme TODO:
         ArbreBin -> Entier
         a -> somme des noeuds
@@ -127,6 +128,7 @@ let rec somme_term a = match a with
 (* - : int = 45 *)
 
 (*
+    2.
     max_a
         ArbreBin -> Entier
         a -> Entier maximum de a 
@@ -140,6 +142,7 @@ let rec max_a a = match a with
 (* - : int = 9 *)
 
 (*
+    3.
     complet
         ArbreBin -> boolean
         a ->  si arbre est complet
@@ -155,6 +158,7 @@ let rec complet a = match a with
 (* - : bool = true *)
 
 (*
+    4.
     parfait
         ArbreBin -> boolean
         a ->  si arbre est parfait (complet et équilibré)
@@ -167,6 +171,7 @@ let parfait a = (complet a) && (equilibre a) ;;
 (* - : bool = true *)
 
 (*
+    5.
     miroir
         ArbreBin -> ArbreBin
         a -> miroir de a
@@ -188,3 +193,42 @@ Noeud (Noeud (Noeud (Feuille 8, 5, Feuille 9), 2, Vide), 0,
       @subtitle Problème 2
       ------------------------------------------------
 *)
+
+type 'a elem_arbre = N of 'a | F of 'a | V ;;
+
+(*
+    1.
+    prefixe
+        ArbreBin -> List 'a
+        a -> Liste du parcours en préfixe
+ *)
+let rec prefixe a = match a with 
+    | Vide -> [V]
+    | Feuille f -> [F f]
+    | Noeud (g, x, d) -> [N x]@(prefixe g)@(prefixe d) ;;
+(* val prefixe : 'a arbreBin -> 'a elem_arbre list = <fun> *)
+# prefixe a1;;
+(* - : int elem_arbre list = 
+[N 0; N 1; F 3; N 4; F 6; F 7; N 2; V; N 5; F 9; F 8] *)
+
+(*
+    1.
+    infixe
+        ArbreBin -> List 'a
+        a -> Liste du parcours en infixe
+*)
+let rec infixe a = match a with 
+    | Vide -> [V]
+    | Feuille f -> [F f]
+    | Noeud (g, x, d) -> (infixe g)@[N x]@(infixe d) ;;
+
+(*
+    1.
+    postfixe
+        ArbreBin -> List 'a
+        a -> Liste du parcours en postfixe
+*)
+let rec postfixe a = match a with 
+    | Vide -> [V]
+    | Feuille f -> [F f]
+    | Noeud (g, x, d) -> (postfixe g)@(postfixe d)@[N x] ;;
