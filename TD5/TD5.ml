@@ -112,17 +112,20 @@ let rec equilibre a = match a with
         ArbreBin -> Entier
         a -> somme des noeuds
 *)
-let somme a = ;;
-
+let somme a = match a with 
+    | Vide -> 0
+    | Feuille f -> f
+    | Noeud (fils1, pere, fils2) -> pere + (somme_term fils1) + (somme_term fils2) ;;
+(* val somme : int arbreBin -> int = <fun> *)
+# somme a1 ;;
+(* - : int = 45 *)
+ 
 (*
     somme_term
         ArbreBin -> Entier
         a -> somme des noeuds
 *)
-let rec somme_term a = match a with 
-    | Vide -> 0
-    | Feuille f -> f
-    | Noeud (fils1, pere, fils2) -> pere + (somme_term fils1) + (somme_term fils2) ;;
+let rec somme_term a = ;;
 (* val somme_term : int arbreBin -> int = <fun> *)
 # somme_term a1 ;;
 (* - : int = 45 *)
