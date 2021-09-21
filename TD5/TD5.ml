@@ -105,4 +105,36 @@ let rec equilibre a = match a with
       @subtitle Problème 1
       ------------------------------------------------
 *)
+
+(*
+    somme TODO:
+        ArbreBin -> Entier
+        a -> somme des noeuds
+*)
 let somme a = ;;
+
+(*
+    somme_term
+        ArbreBin -> Entier
+        a -> somme des noeuds
+*)
+let rec somme_term a = match a with 
+    | Vide -> 0
+    | Feuille f -> f
+    | Noeud (fils1, pere, fils2) -> pere + (somme_term fils1) + (somme_term fils2) ;;
+(* val somme_term : int arbreBin -> int = <fun> *)
+# somme_term a1 ;;
+(* - : int = 45 *)
+
+(*
+    max_a
+        ArbreBin -> Entier
+        a -> Entier maximum de a 
+*)
+let rec max_a a = match a with 
+    | Vide -> 0
+    | Feuille f -> f
+    | Noeud (fils1, pere, fils2) -> max pere (max (max_a fils1) (max_a fils2)) ;;
+(* val max_a : int arbreBin -> int = <fun> *)
+# max_a a1 ;;
+(* - : int = 9 *)
