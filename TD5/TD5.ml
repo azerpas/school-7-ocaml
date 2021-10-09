@@ -224,6 +224,9 @@ let rec infixe a = match a with
     | Vide -> [V]
     | Feuille f -> [F f]
     | Noeud (g, x, d) -> (infixe g)@[N x]@(infixe d) ;;
+(* val infixe : 'a arbreBin -> 'a elem_arbre list = <fun> *)
+# infixe a1 ;;
+(* - : int elem_arbre list = [F 3; N 1; F 6; N 4; F 7; N 0; V; N 2; F 9; N 5; F 8] *)
 
 (*
     1.
@@ -235,3 +238,120 @@ let rec postfixe a = match a with
     | Vide -> [V]
     | Feuille f -> [F f]
     | Noeud (g, x, d) -> (postfixe g)@(postfixe d)@[N x] ;;
+(* val postfixe : 'a arbreBin -> 'a elem_arbre list = <fun> *)
+# postfixe a1 ;;
+(* - : int elem_arbre list = [F 3; F 6; F 7; N 4; N 1; V; F 9; F 8; N 5; N 2; N 0] *)
+
+(*
+    2.
+    C'est faux. Impossible dans un arbre binaire ou l'ordre de lecture sera toujours différent 
+    en fonction du placement des fils.
+ *)
+
+
+(*
+      ------------------------------------------------
+      @title Arbres binaires
+      @subtitle Problème 3
+      ------------------------------------------------
+*)
+
+(*
+    1.
+ *)
+let a3 = Noeud(
+    Noeud(
+        Feuille 1,
+        3,
+        Noeud(
+            Feuille 4,
+            6,
+            Feuille 7
+        )
+    ),
+    8,
+    Noeud(
+        Vide,
+        10,
+        Noeud(
+            Feuille 13,
+            14,
+            Vide
+        )
+    )
+) ;;
+(* val a3 : int arbreBin = Noeud (Noeud (Feuille 1, 3, Noeud (Feuille 4, 6, Feuille 7)), 8, Noeud (Vide, 10, Noeud (Feuille 13, 14, Vide))) *)
+
+(*
+    2.
+    est_de_recherche
+        a' Arbre Binaire de Recherche -> boolean
+        a -> si arbre est de recherche ou non
+ *)
+let rec est_de_recherche a = match a with
+    | Vide -> true
+    | Feuille f -> true
+    | Noeud (Feuille g, x, Feuille d) -> if (x > g) && (d > x) then true else false
+    | Noeud (Feuille g, x, d) -> if (x > g) && (est_de_recherche d) then true else false
+    | Noeud (g, x, Feuille d) -> if (x < d) && (est_de_recherche g) then true else false
+    | Noeud (g, x, d) -> if (est_de_recherche g) && (est_de_recherche d) then true else false ;;
+(* val est_de_recherche : 'a arbreBin -> bool = <fun> *)
+# est_de_recherche a1 ;;
+(* - : bool = false *)
+# est_de_recherche a2 ;;
+(* - : bool = true *)
+
+(*
+    3.
+    recherche2
+        a' Arbre Binaire de Recherche * Entier -> boolean
+        a * e -> e appartient à a
+ *)
+let rec recherche2 a e = match a with
+    | Vide -> false
+    | Feuille f -> if f = e then true else false
+    | Noeud (Feuille g, x, Feuille d) -> if (x = e) || (d = e) || (g = e) then true else false
+    | Noeud (Feuille g, x, d) -> if (x = e) || (e = g) || (recherche2 d e) then true else false
+    | Noeud (g, x, Feuille d) -> if (x = e) || (e = d) || (recherche2 g e) then true else false
+    | Noeud (g, x, d) -> if (x = e) || (recherche2 g e) || (recherche2 d e) then true else false ;;
+(* val recherche2 : 'a arbreBin -> 'a -> bool = <fun> *)
+# recherche2 a3 10 ;;
+(* - : bool = true *)
+# recherche2 a3 8 ;;
+(* - : bool = true *)
+# recherche2 a3 2 ;;
+(* - : bool = false *)
+
+(* 
+    Cette méthode est beaucoup moins lourde en terme de complexité car l'arbre est déjà entièrement 
+    trié 
+*)
+
+(*
+    4.
+    add
+        a' Arbre Binaire de Recherche * Entier -> a' Arbre Binaire de Recherche
+        a * e -> Arbre avec e ajouté
+ *)
+let rec add a e = match a with
+    | Vide -> Vide
+    | Feuille f -> if f > e then Noeud(Feuille e, f, Vide) else Noeud(Vide, f, Feuille e)
+    | Noeud (g, x, d) -> if (x > e) then Noeud((add g e), x, d) else Noeud((add d e), x, d) ;;
+(* val add : 'a arbreBin -> 'a -> 'a arbreBin = <fun> *)
+# add a2 1 ;;      
+(* - : int arbreBin = Noeud (Noeud (Noeud (Feuille 1, 2, Vide), 4, Feuille 8), 16, Feuille 32) *)
+# add a3 11 ;;
+(* - : int arbreBin = Noeud (Noeud (Noeud (Noeud (Feuille 11, 13, Vide), 14, Vide), 10, Noeud (Feuille 13, 14, Vide)), 8, Noeud (Vide, 10, Noeud (Feuille 13, 14, Vide))) *)
+
+(*
+    5.
+    remove
+        a' Arbre Binaire de Recherche * Entier -> a' Arbre Binaire de Recherche
+        a * e -> Arbre avec e enlevé
+ *)
+let rec remove a e = match a with
+    | Vide -> false
+    | Feuille f -> if f = e then Vide else Feuille f
+    | Noeud (Feuille g, x, Vide) -> if (x = e) then Feuille g else (remove g e)
+    | Noeud (Vide, x, Feuille d) -> if (x = e) then Feuille d else (remove d e)
+    | Noeud (g, x, d) -> if (x = e) then (closest d g) else Noeud((remove g e), x, (remove d e)) ;;
